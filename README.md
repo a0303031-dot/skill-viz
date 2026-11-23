@@ -1,5 +1,7 @@
 # skill-viz
 
+繁體中文 | [English](#english)
+
 把一個 AI agent skill（或一整包規格文件）做成一頁可以搜尋、點開、深淺色切換的單檔 HTML，方便快速看懂一個 skill 在做什麼、流程怎麼走、有哪些規則與檔案。
 
 裝好之後對 agent 說「**幫我視覺化 XXX**」（XXX 是 skill 名稱或資料夾路徑）就會觸發。
@@ -65,3 +67,81 @@ skill-viz/
 ## 去識別化聲明
 
 本分享版移除了原作者的個人路徑、內部工具名稱與個人設定（`config.json` 不隨包附上）。SKILL.md 裡「曾經踩過」的案例只保留教訓，不含任何專案或客戶資訊。
+
+---
+
+## English
+
+skill-viz turns an AI agent skill (or a folder of spec documents) into a single-file interactive HTML page that you can search, click through, and switch between light and dark themes. It helps you quickly understand what a skill does, how its workflow runs, and which rules and files it contains.
+
+> **Note:** the generated pages, the page UI, and the skill's own instructions are in **Traditional Chinese**. The quality gates check Chinese text for dashes and Simplified characters. Text without Chinese characters passes those checks, but the templates' labels stay in Chinese.
+
+### Two page types
+
+| Type | When | What you get |
+|---|---|---|
+| Skill map | A typical skill with SKILL.md, steps, rules, and reference files | Local rules callout, workflow timeline, searchable reference cards, command table, anti-patterns, security assessment, auto-generated file list |
+| Catalog | Many specs that share the same structure (style libraries, template libraries) | Card wall with category filters and search; click a card to see swatches and original sections; security assessment below |
+
+The agent picks the type. The output is one HTML file that works offline; just double-click it.
+
+### Requirements
+
+- An agent that supports skills (for example Claude Code).
+- Python 3.9 or later, plus Pillow (`pip install pillow`), used only for screenshot checks.
+- Edge or Chrome for screenshot checks. If neither is found, set `SKILL_VIZ_BROWSER` to the browser executable.
+
+No npm and no cloud services. The scripts only read the folder you point them at and never run any code inside it.
+
+### Install
+
+1. `git clone` this repo (or download and unzip it) and put the whole folder in a skills directory as `skill-viz`:
+   - Personal (all projects): `~/.claude/skills/skill-viz/`
+   - Or per project: `<project>/.claude/skills/skill-viz/`
+2. Restart the agent and check that `skill-viz` appears in the skill list.
+3. (Optional) Change the output location. By default pages go to `~/SSSKill/<name>/`. Set the `SKILL_VIZ_OUT` environment variable, or put a `config.json` in the skill folder:
+
+   ```json
+   { "outRoot": "D:/my-skill-maps" }
+   ```
+
+4. (Optional) Verify the install:
+
+   ```bash
+   PYTHONUTF8=1 python ~/.claude/skills/skill-viz/scripts/regress.py
+   ```
+
+   The run passes when it prints 「失敗 0 項」 (0 failures). It builds two sample pages from the bundled test data and prints their paths on the last line.
+
+### Usage
+
+Ask the agent 「幫我視覺化 XXX」 ("visualize XXX for me"), or run `/skill-viz XXX`, where XXX is a skill name or folder path.
+
+### Six things to know first
+
+1. **It checks explanations against the source.** Workflow and command descriptions are summaries the agent writes after reading SKILL.md and the implementation. Uncertain readings are marked as local interpretation, with the original text taking precedence.
+2. **Quality gates block bad output on purpose:** dashes or Simplified characters in Chinese text, an unfinished skeleton, or a page that mentions a file that does not exist will all fail the build.
+3. **Review external sources first.** Before visualizing a skill downloaded from the internet, run a security review before letting the agent read it.
+4. **Generated HTML contains local paths.** The footer and "open source file" buttons carry absolute paths (which may include your user name). Keep this in mind before sharing a page.
+5. **Every page has a security assessment:** the review verdict (APPROVE, CAUTION, REJECT, not reviewed, or not applicable), plus risk signals from a static scan (network access, running programs, deleting files, reading credentials, installing packages, changing Claude settings) with a note for each. A page cannot be built without it. The scan only matches text patterns and does not replace a real security review.
+6. **The output root has an overview page.** `index.html` shows every built page as a card with its icon and review verdict. Run `scripts/index.py` (or the regression test) to add new pages.
+
+### Folder contents
+
+```
+skill-viz/
+├── SKILL.md             # main file the agent reads: six steps and writing rules
+├── README.md            # this file
+├── scripts/             # scan_skill, new, render, shot, textcheck, regress, index, vizlib, icons, config, textrules
+├── templates/           # map.html (skill map), catalog.html (catalog), index.html (overview)
+├── references/          # data format notes for both page types
+└── tests/               # test data, also examples of every block type
+```
+
+### Anonymization
+
+This shared version removes the original author's personal paths, internal tool names, and personal settings (`config.json` is not included). Past pitfalls in SKILL.md keep only the lessons, with no project or customer information.
+
+### License
+
+MIT, see [LICENSE](LICENSE).
