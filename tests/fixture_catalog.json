@@ -1,0 +1,16 @@
+{
+ "title": "skill-viz 自測：圖鑑",
+ "icon": "palette",
+ "security": {"verdict": "未審查", "by": "本機自建", "date": "2026-11-23", "summary": "自測用。**粗體**與 `code` 要正常顯示；這份的訊號說明對應 skill-viz 自己的原始碼。", "conditions": ["條件一有 `code`。", "條件二有 **粗體**。"], "notes": {"exec": "`shot.py` 開 headless 瀏覽器、`regress.py` 與 `vizlib.py` 呼叫建置腳本與 render.py，`scan_skill.py` 是規則字串本身。", "delete": "只刪自己建的暫存資料夾與截圖暫存檔；`scan_skill.py` 是規則字串本身。", "secrets": "`scan_skill.py` 的偵測規則字串本身，不讀任何帳密。", "install": "導讀提到裝 Pillow 的指令，腳本不會自動安裝。", "network": "自測用的多餘說明，沒掃到時只會提醒。"}},
+ "lede": "三個項目，涵蓋有色碼、沒色碼、特殊標記、原文章節。頁首也有 `code` 與 **粗體**。",
+ "badges": [{"text": "自測"}, {"text": "警告", "tone": "warn"}],
+ "unit": "個樣本",
+ "flag": {"label": "特殊標記 ✦", "short": "✦ 標記", "note": "這是標記說明。"},
+ "sectionNote": "章節是原文。",
+ "footer": "頁尾有 `code`。",
+ "items": [
+  {"id": "alpha", "name": "甲樣本", "en": "Alpha", "cat": "one", "catLabel": "第一類", "summary": "有色碼與標記。", "tagline": "An *original* tagline with `code`.", "palette": ["#c8442a", "#2f5fd0", "#25804a"], "paletteCount": 3, "kb": 1.2, "flag": true, "tags": ["標籤"], "sections": [{"title": "本質", "en": "Essence", "md": "- **Bold** item\n- `code` item\n\n| a | b |\n|---|---|\n| 1 | 2 |"}]},
+  {"id": "beta", "name": "乙樣本", "en": "Beta", "cat": "one", "catLabel": "第一類", "summary": "沒有色碼，卡片顯示斜紋。", "kb": 0.8},
+  {"id": "gamma", "name": "丙樣本", "cat": "two", "catLabel": "第二類", "summary": "第二類只有一個。", "palette": ["#111111", "#eeeeee"], "kb": 2.5}
+ ]
+}

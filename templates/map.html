@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<link rel="icon" href="__FAVICON__">
+<style>
+:root{
+  color-scheme:light; --bg:#f5f6f8; --surface:#ffffff; --surface-2:#eef0f3; --ink:#1a1d23; --ink-2:#555b66; --ink-3:#8a909b;
+  --line:#e0e3e8; --accent:#2f5fd0; --accent-soft:#e6edfb; --warn:#b4540a; --warn-soft:#fdf1e4; --ok:#25804a; --ok-soft:#e5f4ea;
+  --t-red:#d4402b; --t-amber:#e08a1e; --t-gray:#7a8594; --t-blue:#2f5fd0; --t-green:#25804a;
+  --l5:#a3122a; --l4:#d4402b; --l3:#e08a1e; --l2:#c2a51f; --l1:#7a8594;
+  --k1:#2f5fd0; --k2:#7b4fc9; --k3:#c0398a; --k4:#1f8a8a; --k5:#c27c0e; --k6:#5b6b2f; --k7:#9aa35f; --k8:#9aa0aa;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.05); --bar-ink:#fff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark; --bg:#121418; --surface:#1b1e24; --surface-2:#242830; --ink:#e7e9ee; --ink-2:#aab0bb; --ink-3:#7d838e;
+    --line:#2f343d; --accent:#7aa2ff; --accent-soft:#1f2a44; --warn:#f0a35c; --warn-soft:#3a2a1a; --ok:#5fc58a; --ok-soft:#173022;
+    --t-red:#ff7a5c; --t-amber:#f5a742; --t-gray:#8e98a8; --t-blue:#7aa2ff; --t-green:#5fc58a;
+    --l5:#ff5a6e; --l4:#ff7a5c; --l3:#f5a742; --l2:#d9c24a; --l1:#8e98a8;
+    --k1:#7aa2ff; --k2:#b08cff; --k3:#f07ac0; --k4:#4fc4c4; --k5:#e6a84a; --k6:#a9bc5c; --k7:#c7cf8e; --k8:#7d838e;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3); --bar-ink:#121418;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#121418; --surface:#1b1e24; --surface-2:#242830; --ink:#e7e9ee; --ink-2:#aab0bb; --ink-3:#7d838e;
+  --line:#2f343d; --accent:#7aa2ff; --accent-soft:#1f2a44; --warn:#f0a35c; --warn-soft:#3a2a1a; --ok:#5fc58a; --ok-soft:#173022;
+  --t-red:#ff7a5c; --t-amber:#f5a742; --t-gray:#8e98a8; --t-blue:#7aa2ff; --t-green:#5fc58a;
+  --l5:#ff5a6e; --l4:#ff7a5c; --l3:#f5a742; --l2:#d9c24a; --l1:#8e98a8;
+  --k1:#7aa2ff; --k2:#b08cff; --k3:#f07ac0; --k4:#4fc4c4; --k5:#e6a84a; --k6:#a9bc5c; --k7:#c7cf8e; --k8:#7d838e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3); --bar-ink:#121418;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.65 "Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+code{font-family:Consolas,"Cascadia Mono",monospace;font-size:.88em;background:var(--surface-2);padding:0 4px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:28px;line-height:1.25;margin:0 0 6px}
+h1 .ico{display:inline-flex;vertical-align:-5px;margin-right:10px;color:var(--accent)}
+h2{font-size:20px;margin:0 0 4px}
+h3.bh{margin:22px 0 8px;font-size:16px}
+.lede{color:var(--ink-2);margin:0 0 6px;max-width:780px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.badge{font-size:12.5px;border-radius:999px;padding:2px 10px;background:var(--surface-2);color:var(--ink-2)}
+.badge.warn{background:var(--warn-soft);color:var(--warn);font-weight:700}
+.badge.ok{background:var(--ok-soft);color:var(--ok);font-weight:700}
+.badge.accent{background:var(--accent-soft);color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0 6px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.stat b{display:block;font-size:24px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{color:var(--ink-2);font-size:13px}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:18px -16px 0;padding:10px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink-2);font-size:13.5px;padding:4px 11px;border-radius:999px;background:var(--surface-2)}
+nav a:hover{color:var(--ink)}
+nav .sp{flex:1}
+nav button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:2px 10px;cursor:pointer;font:inherit}
+section{margin-top:34px}
+.sec-sub{color:var(--ink-3);font-size:13.5px;margin:0 0 14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.callout{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);border-radius:14px;padding:14px 16px}
+.callout.info{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.callout ol,.callout ul{margin:0;padding-left:22px}
+.callout li{margin:4px 0}
+.callout h3{margin:0 0 6px;font-size:15px;color:var(--warn)}
+.callout.info h3{color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.cmp h3{margin:0;font-size:17px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cmp .en{color:var(--ink-3);font-size:13px;font-weight:400}
+.pill{font-size:12px;border-radius:999px;padding:1px 9px;font-weight:700;background:var(--surface-2);color:var(--ink-2)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.accent{background:var(--accent-soft);color:var(--accent)}
+.kv{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}
+.kv dt{color:var(--ink-3)} .kv dd{margin:0}
+.note{color:var(--ink-3);font-size:13px;margin:10px 0 0}
+.timeline{display:grid;gap:12px}
+.step{display:grid;grid-template-columns:44px 1fr;gap:12px}
+.num{width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--bar-ink);display:grid;place-items:center;font-weight:700;font-size:18px;position:relative}
+.step:not(:last-child) .num::after{content:"";position:absolute;top:46px;left:21px;width:2px;height:calc(100% + 10px);background:var(--line)}
+.step .card{padding:12px 14px}
+.step h3{margin:0;font-size:16px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.step h3 small{color:var(--ink-3);font-weight:400;font-size:13px}
+.step p{margin:6px 0 8px;color:var(--ink-2);font-size:14px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chips+.chips{margin-top:6px}
+.chips .lab{font-size:12px;color:var(--ink-3);margin-right:2px}
+.chip{font-size:12.5px;border-radius:7px;padding:1px 8px;background:var(--surface-2);color:var(--ink-2);border:1px solid transparent;font-family:inherit;text-decoration:none}
+button.chip,a.chip{cursor:pointer}
+button.chip:hover,a.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip.out{background:var(--ok-soft);color:var(--ok)}
+.chip.agent{background:var(--accent-soft);color:var(--accent)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.endbox{margin-top:14px;border:1px dashed var(--ink-3);border-radius:14px;padding:12px 16px}
+.endbox ol{margin:4px 0;padding-left:22px}
+.endbox p{margin:4px 0 0;font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.tile{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--k3);border-radius:10px;padding:8px 12px}
+.tile b{display:block;font-size:14.5px} .tile span{color:var(--ink-3);font-size:12px}
+.finder{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:4px 0 12px}
+.finder input{flex:1 1 280px;min-width:0;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 12px;font:inherit}
+.finder input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.finder span{color:var(--ink-3);font-size:13px}
+.fcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.fcard{border-top:4px solid var(--k4);display:flex;flex-direction:column;gap:6px}
+.fcard h3{margin:0;font-size:16px}
+.fcard .path{font-size:12px;color:var(--ink-3);background:none;border:none;padding:0;cursor:pointer;text-align:left;font-family:Consolas,monospace;max-width:100%;overflow-wrap:anywhere}
+.fcard .path:hover{color:var(--accent);text-decoration:underline}
+.fcard p{margin:0;color:var(--ink-2);font-size:13.5px}
+.fcard.hide{display:none}
+mark{background:color-mix(in srgb,var(--accent) 25%,transparent);color:inherit;border-radius:3px}
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.st{border-left:4px solid var(--line)}
+.st h3{margin:0;font-size:15px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.st h3 code{background:none;color:var(--ink-3);font-weight:400}
+.st p{margin:6px 0 0;color:var(--ink-2);font-size:14px}
+.st.red{border-left-color:var(--t-red)} .st.amber{border-left-color:var(--t-amber)} .st.gray{border-left-color:var(--t-gray)} .st.blue{border-left-color:var(--t-blue)} .st.green{border-left-color:var(--t-green)}
+.st.compact{padding:10px 12px;box-shadow:none}
+.ladder{display:grid;gap:8px}
+.rung{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:stretch}
+.rung .bar{border-radius:8px;color:var(--bar-ink);font-weight:700;display:flex;flex-direction:column;justify-content:center;padding:6px 10px;font-size:14px;line-height:1.3}
+.rung .bar.dk{color:#1a1d23}
+.rung .bar small{font-weight:400;font-size:11.5px;opacity:.9;font-family:Consolas,monospace}
+.rung .desc{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px;color:var(--ink-2)}
+.rule{margin-top:12px;background:var(--accent-soft);border-radius:12px;padding:10px 14px;font-size:14px}
+.tbl{width:100%;border-collapse:separate;border-spacing:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14px}
+.tbl th,.tbl td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl tr:last-child td,.tbl tr:last-child th{border-bottom:none}
+.tbl thead th{background:var(--surface-2);font-size:13.5px}
+.tbl tbody th{color:var(--ink-3);font-weight:400;white-space:nowrap;width:1%}
+.tbl-wrap{overflow-x:auto}
+.olist{margin:0;padding-left:22px} .olist li{margin:5px 0}
+.anti{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px}
+.anti li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px 8px 38px;position:relative;font-size:14px}
+.anti li::before{content:"✕";position:absolute;left:13px;top:8px;color:var(--t-red);font-weight:700}
+.anti.do li::before{content:"✓";color:var(--t-green)}
+.samples{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.sample{display:flex;flex-direction:column;gap:6px;padding:14px}
+.sample h3{margin:0;font-size:15.5px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.sample h3 small{color:var(--ink-3);font-weight:400;font-size:12.5px}
+.sample p{margin:0;color:var(--ink-2);font-size:13.5px}
+.sample .lang{align-self:flex-end;font:11px Consolas,monospace;color:var(--ink-3);margin-bottom:-4px}
+.sample pre{margin:0;background:var(--surface-2);border-radius:10px;padding:10px 12px;font:12.5px/1.55 Consolas,"Cascadia Mono",monospace;overflow-x:auto;white-space:pre;flex:1}
+.sample pre .add{color:var(--t-green);background:color-mix(in srgb,var(--t-green) 12%,transparent);display:inline-block;min-width:100%}
+.sample pre .del{color:var(--t-red);background:color-mix(in srgb,var(--t-red) 12%,transparent);display:inline-block;min-width:100%}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-bottom:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.files{display:grid;gap:6px}
+.frow{display:grid;grid-template-columns:minmax(150px,300px) 1fr 70px;gap:10px;align-items:center;background:none;border:none;padding:4px 6px;border-radius:8px;cursor:pointer;font:inherit;color:inherit;text-align:left}
+.frow:hover{background:var(--surface-2)}
+.frow .fn{font-family:Consolas,monospace;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.frow .track{height:14px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.frow .fill{display:block;height:100%;border-radius:4px}
+.frow .sz{font-size:12.5px;color:var(--ink-3);text-align:right;font-variant-numeric:tabular-nums}
+.more{margin-top:8px}
+dialog{border:none;padding:0;border-radius:16px;width:min(720px,calc(100vw - 24px));max-height:calc(100vh - 40px);background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.dh{position:sticky;top:0;background:var(--surface);padding:16px 20px 10px;border-bottom:1px solid var(--line)}
+.dh h3{margin:0;font-family:Consolas,monospace;font-size:18px;word-break:break-all;padding-right:40px}
+.dh .sub{color:var(--ink-3);font-size:13px}
+.close{position:absolute;right:14px;top:12px;width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font-size:18px;cursor:pointer}
+.db{padding:14px 20px 20px;font-size:14px}
+.db h4{margin:14px 0 6px;font-size:14px;color:var(--ink-2)}
+.db ul{margin:0;padding-left:20px} .db li{margin:2px 0}
+.btn{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);text-decoration:none;font:inherit;font-size:13.5px;cursor:pointer}
+footer{margin-top:40px;color:var(--ink-3);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:560px){h1{font-size:23px}.rung{grid-template-columns:1fr}.frow{grid-template-columns:1fr 56px}.frow .track{grid-column:1/-1;order:3}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1 id="title"></h1><p class="lede" id="lede"></p><div class="badges" id="badges"></div><div class="stats" id="stats"></div></header>
+  <nav id="nav"></nav>
+  <main id="main"></main>
+  <footer id="foot"></footer>
+</div>
+<dialog id="dlg" aria-labelledby="dTitle">
+  <div class="dh"><h3 id="dTitle"></h3><div class="sub" id="dSub"></div><button class="close" id="dClose" aria-label="關閉">×</button></div>
+  <div class="db" id="dBody"></div>
+</dialog>
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const inl = s => esc(s).replace(/&lt;br\s*\/?&gt;/g,"<br>").replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");
+const kb = b => b >= 1024 ? (b/1024).toFixed(1)+" KB" : b+" B";
+const SCAN = D.scan || {files:[]};
+const FILES = new Map(SCAN.files.map(f=>[f.path,f]));
+const BASE = new Map(); SCAN.files.forEach(f=>{ const b=f.path.split("/").pop(); BASE.set(b, BASE.has(b)?null:f.path); });
+const resolveFile = n => FILES.has(n) ? n : (BASE.get(n) || null);
+const chip = (t, tone="", tip="") => { const p=resolveFile(t); return p ? `<button class="chip ${tone}" data-file="${esc(p)}" title="${esc(tip||p)}">${esc(t)}</button>` : (t.startsWith("#") ? "" : `<span class="chip ${tone}" ${tip?`title="${esc(tip)}"`:""}>${inl(t)}</span>`); };
+const linkChip = c => typeof c==="string" ? chip(c) : (c.href ? `<a class="chip ${c.tone||""}" href="${esc(c.href)}">${esc(c.text)}</a>` : chip(c.text, c.tone||"", c.title||""));
+
+(function(){
+  let t=null; try{ t=localStorage.getItem("skill-viz-theme"); }catch(e){}
+  if(t) document.documentElement.dataset.theme=t;
+})();
+function toggleTheme(){
+  const dark=matchMedia("(prefers-color-scheme: dark)").matches;
+  const cur=document.documentElement.dataset.theme||(dark?"dark":"light");
+  const next=cur==="dark"?"light":"dark";
+  document.documentElement.dataset.theme=next;
+  try{ localStorage.setItem("skill-viz-theme",next); }catch(e){}
+}
+
+const R = {
+  callout: b => `<div class="callout ${b.tone==="info"?"info":""}">${b.title?`<h3>${inl(b.title)}</h3>`:""}<${b.ordered===false?"ul":"ol"}>${b.items.map(i=>`<li>${inl(i)}</li>`).join("")}</${b.ordered===false?"ul":"ol"}></div>`,
+  compare: b => `<div class="grid2">${b.cards.map(c=>`<div class="card cmp"><h3>${esc(c.title)}${c.en?` <span class="en">${esc(c.en)}</span>`:""}${c.badge?`<span class="pill ${c.tone||""}">${inl(c.badge)}</span>`:""}</h3>
+     <dl class="kv">${(c.rows||[]).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${inl(v)}</dd>`).join("")}</dl></div>`).join("")}</div>${b.note?`<p class="note"><b>${esc(b.noteLabel||"拿不準？")}</b> ${inl(b.note)}</p>`:""}`,
+  timeline: b => `<div class="timeline">${b.steps.map((s,i)=>`<div class="step"><div class="num">${esc(s.n ?? i+1)}</div><div class="card">
+     <h3>${inl(s.title)}${s.en?` <small>${esc(s.en)}</small>`:""}</h3>${s.text?`<p>${inl(s.text)}</p>`:""}
+     ${(s.tags||[]).map(t=>`<div class="chips"><span class="lab">${esc(t.label)}</span>${t.items.map(x=>linkChip(typeof x==="string"?{text:x,tone:t.tone}:{tone:t.tone,...x})).join("")}</div>`).join("")}
+     </div></div>`).join("")}</div>${b.end?`<div class="endbox"><b>${esc(b.end.title||"收尾條件")}</b><ol>${b.end.items.map(x=>`<li>${inl(x)}</li>`).join("")}</ol>${b.end.note?`<p>${inl(b.end.note)}</p>`:""}</div>`:""}`,
+  tiles: b => `<div class="tiles">${b.items.map(t=>`<div class="tile"><b>${inl(t.title)}</b>${t.sub?`<span>${esc(t.sub)}</span>`:""}</div>`).join("")}</div>`,
+  finder: (b, id) => `<div class="finder"><input data-finder="${id}" type="search" placeholder="${esc(b.placeholder||"搜尋")}"><span data-fcount="${id}"></span></div><div class="fcards" data-fgrid="${id}"></div>`,
+  states: b => `<div class="states">${b.items.map(s=>`<div class="card st ${s.tone||""} ${b.compact?"compact":""}"><h3>${inl(s.title)}${s.code?` <code>${esc(s.code)}</code>`:""}</h3>${s.text?`<p>${inl(s.text)}</p>`:""}</div>`).join("")}</div>`,
+  ladder: b => `<div class="ladder">${b.items.map(r=>{const lv=Math.max(1,Math.min(5,r.level||3));return `<div class="rung"><div class="bar ${lv<=3&&lv>=2?"dk":""}" style="background:var(--l${lv})">${esc(r.label)}${r.code?`<small>${esc(r.code)}</small>`:""}</div><div class="desc">${inl(r.text)}</div></div>`}).join("")}</div>${b.note?`<div class="rule">${inl(b.note)}</div>`:""}`,
+  cards: b => `<div class="grid2">${b.items.map((c,i)=>`<div class="card"><b>${b.numbered?`${i+1}. `:""}${inl(c.title)}</b>${c.text?`<p style="margin:6px 0 0;color:var(--ink-2);font-size:14px">${inl(c.text)}</p>`:""}${c.chips?`<div class="chips" style="margin-top:8px">${c.chips.map(linkChip).join("")}</div>`:""}</div>`).join("")}</div>`,
+  table: b => `<div class="tbl-wrap"><table class="tbl">${b.head?`<thead><tr>${b.head.map(h=>`<th>${inl(h)}</th>`).join("")}</tr></thead>`:""}<tbody>${b.rows.map(r=>`<tr>${r.map((c,i)=>i===0&&b.rowHeader?`<th>${inl(c)}</th>`:`<td>${c===""?'<span style="color:var(--ink-3)">無</span>':inl(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${b.note?`<p class="note">${inl(b.note)}</p>`:""}`,
+  list: b => `<div class="card"><${b.ordered===false?"ul":"ol"} class="olist">${b.items.map(i=>`<li>${inl(i)}</li>`).join("")}</${b.ordered===false?"ul":"ol"}>${b.note?`<p class="note">${inl(b.note)}</p>`:""}</div>`,
+  anti: b => `<ul class="anti ${b.tone==="do"?"do":""}">${b.items.map(i=>`<li>${inl(i)}</li>`).join("")}</ul>`,
+  note: b => `<p class="note">${inl(b.text)}</p>`,
+  samples: b => `<div class="samples">${b.items.map(s=>`<div class="card sample"><h3>${inl(s.title)}${s.en?` <small>${esc(s.en)}</small>`:""}</h3>${s.text?`<p>${inl(s.text)}</p>`:""}${s.raw?`${s.lang?`<span class="lang">${esc(s.lang)}</span>`:""}<pre>${s.lang==="diff"?esc(s.raw).split("\n").map(l=>l.startsWith("+")?`<span class="add">${l}</span>`:l.startsWith("-")?`<span class="del">${l}</span>`:l).join("\n"):esc(s.raw)}</pre>`:`<p class="note">${esc(s.empty||"沒有範例")}</p>`}</div>`).join("")}</div>`,
+  files: (b, id) => `<div class="legend" data-legend="${id}"></div><div class="files" data-files="${id}"></div>`
+};
+
+// 頁首
+document.title = D.title;
+$("#title").innerHTML = (D.iconSvg?`<span class="ico">${D.iconSvg}</span>`:"") + esc(D.title);
+$("#lede").innerHTML = inl(D.lede || SCAN.description || "");
+$("#badges").innerHTML = (D.badges||[]).map(b=>`<span class="badge ${b.tone||""}">${inl(b.text)}</span>`).join("");
+const autoStats = [[SCAN.fileCount,"個檔案"],[(SCAN.totalBytes/1024).toFixed(0)+" KB","總篇幅"]];
+$("#stats").innerHTML = (D.stats||autoStats).map(([v,l])=>`<div class="stat"><b>${inl(String(v))}</b><span>${inl(l)}</span></div>`).join("");
+
+// 區塊
+const sections = [...(D.sections||[])];
+if(D.files!==false && SCAN.files.length) sections.push({id:"files",nav:"檔案",title:"檔案清單",sub:`共 ${SCAN.fileCount} 個檔案。依大小排序，點一列看章節與引用關係。`,blocks:[{type:"files"}]});
+$("#nav").innerHTML = sections.map(s=>`<a href="#${esc(s.id)}">${esc((s.nav||s.title).replace(/[`*]/g,""))}</a>`).join("")+`<span class="sp"></span><button id="theme" aria-label="切換深淺色">◐</button>`;
+$("#theme").onclick = toggleTheme;
+let bid = 0; const finders = [], fileBlocks = [];
+$("#main").innerHTML = sections.map(s=>`<section id="${esc(s.id)}">${s.title?`<h2>${inl(s.title)}</h2>`:""}${s.sub?`<p class="sec-sub">${inl(s.sub)}</p>`:""}
+  ${s.blocks.map(b=>{ const id="b"+(bid++); if(b.type==="finder") finders.push([id,b]); if(b.type==="files") fileBlocks.push([id,b]);
+    const r=R[b.type]; return (b.heading?`<h3 class="bh">${inl(b.heading)}</h3>`:"")+(r?r(b,id):`<p class="note">未知區塊 ${esc(b.type)}</p>`); }).join("")}</section>`).join("");
+
+// 搜尋卡片
+finders.forEach(([id,b])=>{
+  const grid=document.querySelector(`[data-fgrid="${id}"]`), cnt=document.querySelector(`[data-fcount="${id}"]`);
+  const draw=q=>{
+    q=(q||"").trim().toLowerCase(); let n=0;
+    // 沒在搜尋時照常套行內格式；搜尋時去掉反引號再標亮，避免標亮切壞 <code>
+    const hl=s=>{ if(!q) return inl(s); const e=esc(String(s??"").replace(/`([^`]+)`/g,"$1")); const k=esc(q).toLowerCase(), i=e.toLowerCase().indexOf(k); return i<0?e:e.slice(0,i)+"<mark>"+e.slice(i,i+k.length)+"</mark>"+e.slice(i+k.length);};
+    grid.innerHTML=b.items.map(it=>{
+      const hay=[it.title,it.file,it.text,...(it.chips||[]).map(c=>typeof c==="string"?c:(c.text+" "+(c.title||"")))].join(" ").toLowerCase();
+      const show=!q||hay.includes(q); if(show) n++;
+      const fp=it.file&&resolveFile(it.file);
+      return `<div class="card fcard ${show?"":"hide"}"><h3>${hl(it.title)}</h3>
+        ${it.file?(fp?`<button class="path" data-file="${esc(fp)}">${esc(it.file)}${it.meta?` · ${esc(it.meta)}`:""}</button>`:`<span class="path">${esc(it.file)}</span>`):""}
+        ${it.text?`<p>${hl(it.text)}</p>`:""}
+        ${it.chips?`<div class="chips">${it.chips.map(c=>{const t=typeof c==="string"?c:c.text, tip=typeof c==="string"?"":(c.title||""); return `<span class="chip" title="${esc(tip)}">${hl(t)}</span>`;}).join("")}</div>`:""}</div>`;
+    }).join("");
+    cnt.textContent=q?`符合 ${n} / ${b.items.length}`:"";
+    if(q&&!n) grid.insertAdjacentHTML("beforeend",`<div class="card" style="grid-column:1/-1;color:var(--ink-3)">${esc(b.empty||"沒有符合的項目，換個說法再找。")}</div>`);
+  };
+  document.querySelector(`[data-finder="${id}"]`).addEventListener("input",e=>draw(e.target.value)); draw("");
+});
+
+// 檔案清單
+const KR = (D.fileKinds||[]).map(k=>({re:new RegExp(k.match), kind:k.kind, label:k.label}));
+const kindOf = p => { for(const k of KR) if(k.re.test(p)) return k; return {kind:"other",label:"其他"}; };
+const kindIdx = {}; [...new Set(KR.map(k=>k.kind)),"other"].forEach((k,i)=>kindIdx[k]=Math.min(i+1,8));
+fileBlocks.forEach(([id,b])=>{
+  const list=[...SCAN.files].sort((a,c)=>c.bytes-a.bytes), max=Math.max(1,...list.map(f=>f.bytes)), LIMIT=b.limit||40;
+  const used=new Map(); list.forEach(f=>{const k=kindOf(f.path); used.set(k.kind,k.label);});
+  document.querySelector(`[data-legend="${id}"]`).innerHTML=[...used].map(([k,l])=>`<span><i style="background:var(--k${kindIdx[k]})"></i>${esc(l)}</span>`).join("");
+  const row=f=>`<button class="frow" data-file="${esc(f.path)}"><span class="fn" title="${esc(f.path)}">${esc(f.path)}</span><span class="track"><span class="fill" style="width:${(f.bytes/max*100).toFixed(1)}%;background:var(--k${kindIdx[kindOf(f.path).kind]})"></span></span><span class="sz">${kb(f.bytes)}</span></button>`;
+  const box=document.querySelector(`[data-files="${id}"]`);
+  box.innerHTML=list.slice(0,LIMIT).map(row).join("");
+  if(list.length>LIMIT){ box.insertAdjacentHTML("afterend",`<button class="btn more">再顯示 ${list.length-LIMIT} 個</button>`); box.nextElementSibling.onclick=e=>{ box.innerHTML=list.map(row).join(""); e.target.remove(); }; }
+});
+
+function openFile(path){
+  const f=FILES.get(path); if(!f) return;
+  $("#dTitle").textContent=f.path;
+  $("#dSub").textContent=`${kindOf(f.path).label} · ${kb(f.bytes)}${f.lines?` · ${f.lines} 行`:""}`;
+  const heads=(f.headings||[]).filter(h=>h.level<=3).slice(0,40);
+  const list=(arr,empty)=>arr&&arr.length?`<div class="chips">${arr.map(p=>chip(p)).join("")}</div>`:`<span style="color:var(--ink-3)">${empty}</span>`;
+  $("#dBody").innerHTML=`${heads.length?`<h4>章節（${heads.length} 個）</h4><ul>${heads.map(h=>`<li style="margin-left:${(h.level-1)*12}px">${esc(h.text)}</li>`).join("")}</ul>`:""}
+    <h4>引用到</h4>${list(f.refs,"沒有明確連到其他檔案")}
+    <h4>被誰引用</h4>${list(f.refsIn,"沒有其他檔案連到它")}
+    ${f.risks&&f.risks.length?`<h4>風險訊號（見安全評估）</h4><ul>${f.risks.map(([k,ls])=>`<li>${esc(k)}：第 ${ls.map(esc).join("、")} 行</li>`).join("")}</ul>`:""}
+    <h4>原檔</h4><a class="btn" href="file:///${encodeURI(SCAN.root+"/"+f.path)}" target="_blank" rel="noopener">開啟原檔</a>
+    <p class="note">章節名稱為原文。腳本只看不跑。</p>`;
+  $("#dlg").showModal(); $("#dlg").scrollTop=0;
+}
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-file]"); if(b){ e.preventDefault(); openFile(b.dataset.file); } });
+$("#dClose").onclick=()=>$("#dlg").close();
+$("#dlg").addEventListener("click",e=>{ if(e.target===$("#dlg")) $("#dlg").close(); });
+$("#foot").innerHTML = inl(D.footer || "") + (SCAN.root?`<br>由 skill-viz 產生，掃描來源 <code>${esc(SCAN.root)}</code>。`:"");
+if(location.hash.startsWith("#file=")) openFile(decodeURIComponent(location.hash.slice(6)));
+</script>
+</body>
+</html>

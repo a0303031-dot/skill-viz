@@ -1,0 +1,46 @@
+{
+ "title": "skill-viz 自測：地圖全區塊",
+ "icon": "map",
+ "security": {"verdict": "未審查", "by": "本機自建", "date": "2026-11-23", "summary": "自測用。**粗體**與 `code` 要正常顯示；這份的訊號說明對應 skill-viz 自己的原始碼。", "conditions": ["條件一有 `code`。", "條件二有 **粗體**。"], "notes": {"exec": "`shot.py` 開 headless 瀏覽器、`regress.py` 與 `vizlib.py` 呼叫建置腳本與 render.py，`scan_skill.py` 是規則字串本身。", "delete": "只刪自己建的暫存資料夾與截圖暫存檔；`scan_skill.py` 是規則字串本身。", "secrets": "`scan_skill.py` 的偵測規則字串本身，不讀任何帳密。", "install": "導讀提到裝 Pillow 的指令，腳本不會自動安裝。", "network": "自測用的多餘說明，沒掃到時只會提醒。"}},
+ "lede": "每個文字欄位都放了 `行內程式碼` 與 **粗體**，截圖時任何地方看到反引號或星號原樣印出就是模板 bug。",
+ "badges": [{"text": "警告色", "tone": "warn"}, {"text": "成功色", "tone": "ok"}, {"text": "強調色 `abc1234`", "tone": "accent"}, {"text": "一般"}],
+ "stats": [[12, "種區塊"], ["`ok`", "統計可放程式碼"]],
+ "sections": [
+  {"id": "s1", "nav": "提示框", "title": "callout 與 `compare`", "sub": "副標也有 `code`。", "blocks": [
+   {"type": "callout", "title": "橘色提示 `callout`", "items": ["第一條有 `code` 與 **粗體**", "第二條"]},
+   {"type": "callout", "tone": "info", "ordered": false, "title": "藍色提示", "items": ["無序清單 `ul`"]},
+   {"type": "compare", "note": "比較卡備註有 `code`。", "cards": [
+    {"title": "左卡", "en": "Left", "badge": "預設", "tone": "ok", "rows": [["欄位", "內容 `x`"]]},
+    {"title": "右卡", "en": "Right", "badge": "要 `--flag`", "tone": "warn", "rows": [["欄位", "內容 **y**"]]}]}]},
+  {"id": "s2", "nav": "時間軸", "title": "timeline", "blocks": [
+   {"type": "timeline", "steps": [
+    {"n": "-1", "title": "負數編號", "en": "Neg", "text": "內文 `cmd --flag`", "tags": [{"label": "讀", "items": ["SKILL.md", "references/map-blocks.md"]}, {"label": "指令", "tone": "agent", "items": ["`python x.py`"]}, {"label": "產出", "tone": "out", "items": ["結果"]}]},
+    {"title": "自動編號", "text": "第二步", "tags": [{"label": "連結", "items": [{"text": "跳到搜尋卡片", "href": "#s3"}]}]}],
+    "end": {"title": "收尾", "items": ["收尾也有 `code`"], "note": "粗體備註"}}]},
+  {"id": "s3", "nav": "卡片", "title": "tiles 與 finder", "blocks": [
+   {"type": "tiles", "items": [{"title": "磚塊", "sub": "Tile"}, {"title": "第二塊"}]},
+   {"type": "finder", "heading": "可搜尋卡片", "placeholder": "試搜 code", "empty": "沒找到", "items": [
+    {"title": "卡片一", "file": "SKILL.md", "meta": "1 KB", "text": "內文有 `pos` 與 `col`，這裡曾經漏轉。", "chips": [{"text": "晶片 `a`", "title": "提示"}, "純字串晶片"]},
+    {"title": "卡片二", "file": "scripts/render.py", "text": "第二張"}]}]},
+  {"id": "s4", "nav": "狀態", "title": "states、ladder、cards", "blocks": [
+   {"type": "states", "items": [{"title": "紅", "code": "red", "text": "`x`", "tone": "red"}, {"title": "黃", "code": "amber", "text": "y", "tone": "amber"}, {"title": "灰", "tone": "gray"}, {"title": "藍", "tone": "blue"}, {"title": "綠", "tone": "green"}]},
+   {"type": "states", "compact": true, "heading": "緊湊狀態", "items": [{"title": "A", "code": "a", "text": "緊湊"}]},
+   {"type": "ladder", "heading": "五級色條（深淺色都要看得清字）", "note": "分級備註 `note`", "items": [
+    {"label": "五", "code": "level5", "text": "最重", "level": 5}, {"label": "四", "code": "level4", "text": "`t`", "level": 4},
+    {"label": "三", "code": "level3", "text": "中", "level": 3}, {"label": "二", "code": "level2", "text": "低", "level": 2}, {"label": "一", "code": "level1", "text": "最輕", "level": 1}]},
+   {"type": "cards", "numbered": true, "heading": "編號卡片", "items": [{"title": "原則", "text": "說明 `z`", "chips": ["SKILL.md", "其他"]}]}]},
+  {"id": "s5", "nav": "表格", "title": "table、list、anti、note", "blocks": [
+   {"type": "table", "rowHeader": true, "head": ["", "甲<br>`a`", "乙"], "rows": [["列", "`v`", ""]], "note": "空格顯示「無」"},
+   {"type": "list", "heading": "坑加解法用 list", "items": ["坑：`fill` 屬性被蓋掉。解法：改用 class。"], "note": "清單備註"},
+   {"type": "anti", "heading": "不要做的事用 anti", "items": ["不要 `rm -rf`"]},
+   {"type": "anti", "tone": "do", "heading": "該做的事", "items": ["要跑 `regress.py`"]},
+   {"type": "note", "text": "單行小字 `note`"}]},
+  {"id": "s6", "nav": "範例", "title": "samples", "sub": "程式碼放原文欄位 `raw`，不受繁中關卡限制。", "blocks": [
+   {"type": "samples", "items": [
+    {"title": "有語言標記 `diff`", "en": "Diff", "text": "說明有 **粗體**。", "lang": "diff", "raw": " keep\n-  old — 原文可有破折號\n+  new <tag> & \"quote\""},
+    {"title": "很長的一行", "raw": "const aVeryLongIdentifierName = someFunction(withArgumentOne, withArgumentTwo, withArgumentThree, andMore)"},
+    {"title": "沒有範例", "text": "應顯示 empty 文字", "empty": "上游沒有附範例"}]}]}
+ ],
+ "fileKinds": [{"match": "^SKILL\\.md$", "kind": "skill", "label": "入口"}, {"match": "^scripts/", "kind": "script", "label": "腳本"}, {"match": "^templates/", "kind": "tpl", "label": "模板"}, {"match": ".", "kind": "other", "label": "其他"}],
+ "footer": "頁尾 `footer` 與 **粗體**。"
+}

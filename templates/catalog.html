@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<link rel="icon" href="__FAVICON__">
+<style>
+:root{
+  color-scheme:light; --bg:#f6f4ef; --surface:#ffffff; --surface-2:#efece5; --ink:#1d1c1a; --ink-2:#5b5852; --ink-3:#8a867e;
+  --line:#e2ded5; --accent:#c8442a; --accent-ink:#ffffff; --chip:#ebe7de; --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.05);
+  --hatch:repeating-linear-gradient(45deg,#e7e3da 0 6px,#f1eee8 6px 12px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark; --bg:#151513; --surface:#1f1e1b; --surface-2:#282723; --ink:#ece9e2; --ink-2:#b4b0a7; --ink-3:#827e76;
+    --line:#34322d; --accent:#ef7356; --accent-ink:#151513; --chip:#2b2a26; --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+    --hatch:repeating-linear-gradient(45deg,#2a2925 0 6px,#232220 6px 12px);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#151513; --surface:#1f1e1b; --surface-2:#282723; --ink:#ece9e2; --ink-2:#b4b0a7; --ink-3:#827e76;
+  --line:#34322d; --accent:#ef7356; --accent-ink:#151513; --chip:#2b2a26; --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+  --hatch:repeating-linear-gradient(45deg,#2a2925 0 6px,#232220 6px 12px);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 "Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 16px 64px}
+header h1{font-size:28px;line-height:1.25;margin:0 0 6px}
+header h1 .ico{display:inline-flex;vertical-align:-5px;margin-right:10px;color:var(--accent)}
+header p{margin:0;color:var(--ink-2);font-size:14px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.badge{font-size:12.5px;border-radius:999px;padding:2px 10px;background:var(--surface-2);color:var(--ink-2)}
+.badge.warn{color:var(--accent);font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:24px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{color:var(--ink-2);font-size:13px}
+.controls{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:18px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{flex:1 1 260px;min-width:0;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 12px;font:inherit}
+.search:focus{outline:2px solid var(--accent);outline-offset:-1px}
+select,.toggle{height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 10px;font:inherit;cursor:pointer}
+.toggle[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid transparent;background:var(--chip);color:var(--ink-2);border-radius:999px;padding:4px 11px;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+.chip small{color:var(--ink-3);margin-left:4px;font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chip[aria-pressed="true"] small{color:inherit;opacity:.7}
+.result{color:var(--ink-3);font-size:13px;margin:0 0 10px}
+.group h2{font-size:17px;margin:26px 0 10px;display:flex;align-items:baseline;gap:8px}
+.group h2 small{color:var(--ink-3);font-weight:400;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;font:inherit;color:inherit;padding:0;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .15s ease,border-color .15s ease}
+.card:hover{transform:translateY(-2px);border-color:var(--ink-3)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.strip{display:flex;height:46px} .strip i{flex:1} .strip.none{background:var(--hatch)}
+.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.name{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.name b{font-size:16px} .name span{color:var(--ink-3);font-size:12px}
+.sum{color:var(--ink-2);font-size:13.5px;margin:2px 0 6px}
+.tags{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11.5px;background:var(--surface-2);color:var(--ink-2);border-radius:6px;padding:1px 7px}
+.tag.flag{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.empty{padding:40px;text-align:center;color:var(--ink-3)}
+dialog{border:none;padding:0;border-radius:16px;width:min(860px,calc(100vw - 24px));max-height:calc(100vh - 40px);background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.dh{position:sticky;top:0;background:var(--surface);padding:18px 20px 12px;border-bottom:1px solid var(--line);z-index:1}
+.dh h3{margin:0;font-size:22px;line-height:1.3;padding-right:40px}
+.dh .sub{color:var(--ink-3);font-size:13px;margin-top:2px}
+.close{position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font-size:18px;cursor:pointer}
+.db{padding:16px 20px 22px}
+.lead{font-size:15px;margin:0 0 10px}
+.orig{color:var(--ink-2);font-size:13.5px;border-left:3px solid var(--line);padding-left:10px;margin:0 0 16px}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-bottom:6px}
+.sw button{border:1px solid var(--line);border-radius:10px;overflow:hidden;padding:0;background:var(--surface);cursor:pointer;font:inherit;color:var(--ink-2);text-align:left}
+.sw button i{display:block;height:40px}
+.sw button span{display:block;padding:4px 8px;font:12px/1.4 Consolas,monospace}
+.note{color:var(--ink-3);font-size:12.5px;margin:4px 0 16px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.btn{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);text-decoration:none;font:inherit;font-size:13.5px;cursor:pointer}
+details{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;background:var(--surface)}
+summary{cursor:pointer;padding:10px 14px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary small{color:var(--ink-3);font-weight:400}
+summary::after{content:"＋";color:var(--ink-3)}
+details[open] summary::after{content:"－"}
+.md{padding:0 16px 12px;font-size:14px;color:var(--ink);overflow-wrap:anywhere}
+.md ul,.md ol{padding-left:20px;margin:6px 0} .md li{margin:3px 0} .md p{margin:6px 0}
+.md code{font:12.5px Consolas,monospace;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+.md pre{background:var(--surface-2);padding:10px;border-radius:8px;overflow:auto;font:12.5px/1.5 Consolas,monospace}
+.md table{border-collapse:collapse;font-size:13px;display:block;overflow:auto;margin:6px 0}
+.md td,.md th{border:1px solid var(--line);padding:4px 8px;vertical-align:top}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
+.toast.on{opacity:1}
+.safety{margin-top:40px}
+.safety h2{font-size:20px;margin:0 0 4px}
+.safety .sub{color:var(--ink-3);font-size:13px;margin:0 0 12px}
+.verdict{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--ink-3);border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.verdict.amber{border-left-color:#d08a1e} .verdict.red{border-left-color:#d0453a} .verdict.green{border-left-color:#3f9a5b}
+.verdict b{font-size:16px} .verdict code{font:12.5px Consolas,monospace;color:var(--ink-3);margin-left:8px} .verdict p{margin:4px 0 0;color:var(--ink-2)}
+.safety ul{margin:6px 0 12px;padding-left:20px;color:var(--ink-2)}
+.risk{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--surface);border-radius:12px;overflow:hidden}
+.risk th,.risk td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.risk th{color:var(--ink-3);font-weight:600;font-size:12.5px}
+.risk td code{font:12px Consolas,monospace;overflow-wrap:anywhere}
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+footer{margin-top:40px;color:var(--ink-3);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+footer code{font-size:12px}
+@media (max-width:560px){header h1{font-size:23px}.grid{grid-template-columns:1fr}.dh h3{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title"></h1>
+    <p id="lede"></p>
+    <div class="badges" id="badges"></div>
+  </header>
+  <section class="stats" id="stats"></section>
+  <div class="controls">
+    <div class="row">
+      <input id="q" class="search" type="search">
+      <select id="sort" aria-label="排序"></select>
+      <button id="flag" class="toggle" aria-pressed="false" hidden></button>
+      <button id="theme" class="toggle" aria-label="切換深淺色">◐</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+  <p class="result" id="result"></p>
+  <main id="list"></main>
+  <section class="safety" id="safety" hidden></section>
+  <footer id="foot"></footer>
+</div>
+<dialog id="dlg" aria-labelledby="dTitle">
+  <div class="dh"><h3 id="dTitle"></h3><div class="sub" id="dSub"></div><button class="close" id="dClose" aria-label="關閉">×</button></div>
+  <div class="db" id="dBody"></div>
+</dialog>
+<div class="toast" id="toast"></div>
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const S = D.items;
+const UNIT = D.unit || "個項目";
+const FLAG = D.flag || null;
+const hasPal = S.some(s=>s.palette && s.palette.length);
+const state = { q:"", cat:"", flag:false, sort:"cat" };
+
+(function(){
+  let t=null; try{ t=localStorage.getItem("skill-viz-theme"); }catch(e){}
+  if(t) document.documentElement.dataset.theme=t;
+  $("#theme").onclick=()=>{
+    const dark=matchMedia("(prefers-color-scheme: dark)").matches;
+    const cur=document.documentElement.dataset.theme||(dark?"dark":"light");
+    const next=cur==="dark"?"light":"dark";
+    document.documentElement.dataset.theme=next;
+    try{ localStorage.setItem("skill-viz-theme",next); }catch(e){}
+  };
+})();
+
+function inline(s){
+  return esc(s).replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>").replace(/(^|[^*])\*([^*\s][^*]*)\*/g,"$1<i>$2</i>");
+}
+function md(src){
+  const lines=String(src||"").split(/\r?\n/); let out=[], list=null, para=[], i=0;
+  const fP=()=>{ if(para.length){ out.push("<p>"+inline(para.join(" "))+"</p>"); para=[]; } };
+  const fL=()=>{ if(list){ out.push(`<${list.t}>`+list.items.map(x=>"<li>"+inline(x)+"</li>").join("")+`</${list.t}>`); list=null; } };
+  while(i<lines.length){
+    const l=lines[i]; let m;
+    if(/^```/.test(l)){ fP();fL(); const buf=[]; i++; while(i<lines.length&&!/^```/.test(lines[i])) buf.push(lines[i++]); out.push("<pre>"+esc(buf.join("\n"))+"</pre>"); i++; continue; }
+    if(/^\|/.test(l)){ fP();fL(); let rows=[]; while(i<lines.length&&/^\|/.test(lines[i])) rows.push(lines[i++]); rows=rows.filter(r=>!/^\|[\s:|-]+\|$/.test(r));
+      out.push("<table>"+rows.map((r,ri)=>"<tr>"+r.replace(/^\||\|$/g,"").split("|").map(c=>ri===0?`<th>${inline(c.trim())}</th>`:`<td>${inline(c.trim())}</td>`).join("")+"</tr>").join("")+"</table>"); continue; }
+    if((m=l.match(/^\s*[-*] (.*)/))){ fP(); if(!list||list.t!=="ul"){fL(); list={t:"ul",items:[]};} list.items.push(m[1]); i++; continue; }
+    if((m=l.match(/^\s*\d+[.)] (.*)/))){ fP(); if(!list||list.t!=="ol"){fL(); list={t:"ol",items:[]};} list.items.push(m[1]); i++; continue; }
+    if(!l.trim()){ fP(); fL(); i++; continue; }
+    if(list&&/^\s{2,}\S/.test(l)){ list.items[list.items.length-1]+=" "+l.trim(); i++; continue; }
+    fL(); para.push(l.replace(/^#+\s*/,"").trim()); i++;
+  }
+  fP(); fL(); return out.join("");
+}
+
+const cats=[...new Map(S.map(s=>[s.cat||"",s.catLabel||s.cat||"未分類"])).entries()];
+
+document.title=D.title;
+$("#title").innerHTML=(D.iconSvg?`<span class="ico">${D.iconSvg}</span>`:"")+esc(D.title);
+$("#lede").innerHTML=inline(D.lede||"");
+$("#badges").innerHTML=(D.badges||[]).map(b=>`<span class="badge ${b.tone||""}">${esc(b.text)}</span>`).join("");
+$("#q").placeholder=D.searchPlaceholder||"搜尋名稱、英文名、識別碼或描述";
+$("#sort").innerHTML=[["cat","依分類"],["name","依名稱"],["kb","依篇幅"],...(hasPal?[["pal","依色碼數"]]:[])].map(([v,t])=>`<option value="${v}">${t}</option>`).join("");
+if(FLAG){ $("#flag").hidden=false; $("#flag").textContent="只看"+FLAG.label; $("#flag").title=FLAG.note||""; }
+
+(function stats(){
+  const kb=S.reduce((a,s)=>a+(s.kb||0),0), big=[...S].sort((a,b)=>(b.kb||0)-(a.kb||0))[0];
+  const st=[[S.length,UNIT],[cats.length,"個分類"]];
+  if(FLAG) st.push([S.filter(s=>s.flag).length,FLAG.label]);
+  st.push([kb>=1024?(kb/1024).toFixed(2)+" MB":kb.toFixed(0)+" KB","規格總篇幅"]);
+  if(big) st.push([big.kb+" KB","最長："+big.name]);
+  $("#stats").innerHTML=st.map(([b,s])=>`<div class="stat"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+})();
+
+function renderChips(){
+  const cnt=c=>S.filter(s=>!c||s.cat===c).length;
+  $("#chips").innerHTML=[["","全部"],...cats].map(([c,z])=>`<button class="chip" data-c="${esc(c)}" aria-pressed="${state.cat===c}">${esc(z)}<small>${cnt(c)}</small></button>`).join("");
+  $("#chips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ state.cat=b.dataset.c; renderChips(); renderList(); });
+}
+const strip=p=>!hasPal?"":(p&&p.length?`<div class="strip">${p.slice(0,6).map(h=>`<i style="background:${esc(h)}"></i>`).join("")}</div>`:`<div class="strip none" title="規格裡沒寫明確色碼"></div>`);
+const card=s=>`<button class="card" data-id="${esc(s.id)}" aria-label="${esc(s.name)} 詳情">${strip(s.palette)}
+  <div class="body"><div class="name"><b>${esc(s.name)}</b>${s.en?`<span>${esc(s.en)}</span>`:""}</div>
+  <div class="sum">${esc(s.summary)}</div>
+  <div class="tags"><span class="tag">${esc(s.catLabel||s.cat||"")}</span>${s.flag&&FLAG?`<span class="tag flag">${esc(FLAG.short||FLAG.label)}</span>`:""}${(s.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}${s.kb!=null?`<span class="tag">${s.kb} KB</span>`:""}</div></div></button>`;
+
+function filtered(){
+  const q=state.q.trim().toLowerCase();
+  let r=S.filter(s=>(!state.cat||s.cat===state.cat)&&(!state.flag||s.flag)&&(!q||[s.name,s.en,s.id,s.summary,s.tagline,s.catLabel,...(s.tags||[])].join(" ").toLowerCase().includes(q)));
+  const by={name:(a,b)=>a.name.localeCompare(b.name,"zh-Hant"),kb:(a,b)=>(b.kb||0)-(a.kb||0),pal:(a,b)=>(b.paletteCount||0)-(a.paletteCount||0)};
+  if(by[state.sort]) r=[...r].sort(by[state.sort]);
+  return r;
+}
+function renderList(){
+  const r=filtered();
+  $("#result").textContent=`顯示 ${r.length} / ${S.length} ${UNIT.replace(/^個/,"個")}`;
+  if(!r.length){ $("#list").innerHTML='<div class="empty">沒有符合的項目，換個關鍵字試試。</div>'; return; }
+  $("#list").innerHTML=state.sort==="cat"
+    ? cats.filter(([c])=>r.some(s=>s.cat===c)).map(([c,z])=>{ const g=r.filter(s=>s.cat===c); return `<section class="group"><h2>${esc(z)} <small>${z!==c&&c?esc(c)+" · ":""}${g.length}</small></h2><div class="grid">${g.map(card).join("")}</div></section>`; }).join("")
+    : `<div class="grid">${r.map(card).join("")}</div>`;
+}
+function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("on"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("on"),1400); }
+async function copy(t){ try{ await navigator.clipboard.writeText(t); toast("已複製 "+t); }catch(e){ toast("無法複製，請手動選取"); } }
+
+function open(id){
+  const s=S.find(x=>x.id===id); if(!s) return;
+  $("#dTitle").textContent=s.name;
+  $("#dSub").textContent=[s.en,s.catLabel,s.id,s.kb!=null?s.kb+" KB":""].filter(Boolean).join(" · ");
+  const sw=!hasPal?"":(s.palette&&s.palette.length
+    ?`<div class="sw">${s.palette.map(h=>`<button data-hex="${esc(h)}" title="點一下複製"><i style="background:${esc(h)}"></i><span>${esc(h)}</span></button>`).join("")}</div><p class="note">原文出現的前 ${s.palette.length} 個色碼（共 ${s.paletteCount||s.palette.length} 個），點一下複製。</p>`
+    :`<p class="note">原文沒寫明確色碼。</p>`);
+  $("#dBody").innerHTML=`${s.summary?`<p class="lead">${esc(s.summary)}</p>`:""}${s.tagline?`<p class="orig">${inline(s.tagline)}</p>`:""}
+    ${s.flag&&FLAG&&FLAG.note?`<p class="note">${esc(FLAG.note)}</p>`:""}${sw}
+    <div class="actions">${s.path?`<a class="btn" href="file:///${encodeURI(s.path)}" target="_blank" rel="noopener">${esc(s.openLabel||"開啟原檔")}</a><button class="btn" data-copy="${esc(s.path.replace(/\//g,"\\"))}">複製檔案路徑</button>`:""}<button class="btn" data-copy="${esc(s.id)}">複製識別碼</button></div>
+    ${(s.sections||[]).map((x,i)=>`<details ${i===0?"open":""}><summary><span>${esc(x.title)}${x.en?` <small>${esc(x.en)}</small>`:""}</span></summary><div class="md">${md(x.md)}</div></details>`).join("")}
+    ${D.sectionNote?`<p class="note">${esc(D.sectionNote)}</p>`:""}`;
+  $("#dBody").querySelectorAll("[data-hex]").forEach(b=>b.onclick=()=>copy(b.dataset.hex));
+  $("#dBody").querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>copy(b.dataset.copy));
+  $("#dlg").showModal(); $("#dlg").scrollTop=0;
+  try{ history.replaceState(null,"","#"+encodeURIComponent(id)); }catch(e){}
+}
+$("#list").addEventListener("click",e=>{ const c=e.target.closest(".card"); if(c) open(c.dataset.id); });
+$("#dClose").onclick=()=>$("#dlg").close();
+$("#dlg").addEventListener("click",e=>{ if(e.target===$("#dlg")) $("#dlg").close(); });
+$("#dlg").addEventListener("close",()=>{ try{ history.replaceState(null,"",location.pathname); }catch(e){} });
+$("#q").addEventListener("input",e=>{ state.q=e.target.value; renderList(); });
+$("#sort").onchange=e=>{ state.sort=e.target.value; renderList(); };
+$("#flag").onclick=()=>{ state.flag=!state.flag; $("#flag").setAttribute("aria-pressed",state.flag); renderList(); };
+document.addEventListener("keydown",e=>{ if(e.key==="/"&&document.activeElement!==$("#q")&&!$("#dlg").open){ e.preventDefault(); $("#q").focus(); } });
+if(D.securityView){ const V=D.securityView, box=$("#safety"); box.hidden=false;
+  box.innerHTML=`<h2>安全評估</h2><p class="sub">${esc(V.sub)}</p>
+  <div class="verdict ${esc(V.tone)}"><b>審查結論：${esc(V.verdict)}</b>${V.meta?`<code>${esc(V.meta)}</code>`:""}<p>${inline(V.summary)}</p></div>
+  ${V.conditions.length?`<b>使用條件</b><ul>${V.conditions.map(c=>`<li>${inline(c)}</li>`).join("")}</ul>`:""}
+  ${V.rows.length?`<div class="tablebox"><table class="risk"><tr><th>訊號</th><th>範圍</th><th>主要位置（檔案：行號）</th><th>說明</th></tr>${V.rows.map(r=>`<tr><td>${esc(r.label)}</td><td>${esc(r.range)}</td><td>${r.where.map(w=>`<code>${esc(w)}</code>`).join("<br>")}</td><td>${inline(r.note)}</td></tr>`).join("")}</table></div>`:""}
+  <p class="note">${V.rows.length?"":"靜態掃描沒有抓到風險訊號。"}${esc(V.tip)}</p>`; }
+$("#foot").innerHTML=inline(D.footer||"")+"<br>由 skill-viz 產生。快捷鍵：<code>/</code> 搜尋，<code>Esc</code> 關閉。";
+renderChips(); renderList();
+if(location.hash) open(decodeURIComponent(location.hash.slice(1)));
+</script>
+</body>
+</html>

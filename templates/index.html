@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<link rel="icon" href="__FAVICON__">
+<style>
+:root{
+  color-scheme:light; --bg:#f5f6f8; --surface:#ffffff; --surface-2:#eef0f3; --ink:#1a1d23; --ink-2:#555b66; --ink-3:#8a909b;
+  --line:#e0e3e8; --accent:#2f5fd0; --accent-soft:#e6edfb;
+  --t-red:#d4402b; --t-amber:#c27512; --t-gray:#6f7a89; --t-green:#25804a;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark; --bg:#121418; --surface:#1b1e24; --surface-2:#242830; --ink:#e7e9ee; --ink-2:#aab0bb; --ink-3:#7d838e;
+    --line:#2f343d; --accent:#7aa2ff; --accent-soft:#1f2a44;
+    --t-red:#ff7a5c; --t-amber:#f5a742; --t-gray:#8e98a8; --t-green:#5fc58a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#121418; --surface:#1b1e24; --surface-2:#242830; --ink:#e7e9ee; --ink-2:#aab0bb; --ink-3:#7d838e;
+  --line:#2f343d; --accent:#7aa2ff; --accent-soft:#1f2a44;
+  --t-red:#ff7a5c; --t-amber:#f5a742; --t-gray:#8e98a8; --t-green:#5fc58a;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 "Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+code{font-family:Consolas,"Cascadia Mono",monospace;font-size:.88em;background:var(--surface-2);padding:0 4px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 64px}
+header{display:flex;gap:12px;align-items:flex-start}
+header .txt{flex:1;min-width:0}
+h1{font-size:28px;line-height:1.25;margin:0 0 6px}
+.lede{color:var(--ink-2);margin:0;max-width:780px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:22px 0 16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:24px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{color:var(--ink-2);font-size:13px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.search{flex:1 1 240px;min-width:0;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 12px;font:inherit}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+.chip small{color:var(--ink-3);margin-left:4px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:inherit;opacity:.7}
+#theme{height:38px;width:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);color:inherit;text-decoration:none;transition:transform .15s ease,border-color .15s ease}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{display:flex;gap:12px;align-items:center}
+.ico{flex:none;width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.name{font-size:17px;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.kind{color:var(--ink-3);font-size:12.5px}
+.desc{color:var(--ink-2);font-size:13.5px;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--ink-3)}
+.v{font-weight:700;border-radius:999px;padding:1px 9px;border:1px solid currentColor}
+.v.green{color:var(--t-green)} .v.amber{color:var(--t-amber)} .v.red{color:var(--t-red)} .v.gray{color:var(--t-gray)}
+.missing{border-style:dashed;cursor:default} .missing:hover{transform:none;border-color:var(--line)}
+.empty{padding:40px;text-align:center;color:var(--ink-3)}
+footer{margin-top:40px;color:var(--ink-3);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:560px){h1{font-size:23px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="txt"><h1 id="title"></h1><p class="lede" id="lede"></p></div><button id="theme" aria-label="切換深淺色">◐</button></header>
+  <section class="stats" id="stats"></section>
+  <div class="controls"><input id="q" class="search" type="search" placeholder="搜尋名稱或說明，按 / 開始"><span id="chips"></span></div>
+  <main id="list"></main>
+  <footer id="foot"></footer>
+</div>
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const inl = s => esc(s).replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");
+(function(){ let t=null; try{ t=localStorage.getItem("skill-viz-theme"); }catch(e){} if(t) document.documentElement.dataset.theme=t; })();
+$("#theme").onclick=()=>{ const dark=matchMedia("(prefers-color-scheme: dark)").matches;
+  const next=(document.documentElement.dataset.theme||(dark?"dark":"light"))==="dark"?"light":"dark";
+  document.documentElement.dataset.theme=next; try{ localStorage.setItem("skill-viz-theme",next); }catch(e){} };
+
+const P = D.pages, TONE = D.tones, VERDICTS = D.verdictOrder.filter(v=>P.some(p=>p.verdict===v));
+$("#title").textContent = D.title;
+$("#lede").innerHTML = inl(D.lede);
+const cnt = v => P.filter(p=>p.verdict===v).length;
+$("#stats").innerHTML = [[P.length,"份成品"],[P.filter(p=>p.type==="map").length,"份地圖"],[P.filter(p=>p.type==="catalog").length,"份圖鑑"],
+  [cnt("未審查"),"份未審查"]].map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+let state = {q:"", v:""};
+$("#chips").innerHTML = [["","全部",P.length],...VERDICTS.map(v=>[v,v,cnt(v)])]
+  .map(([v,l,n])=>`<button class="chip" data-v="${esc(v)}" aria-pressed="${v===""}">${esc(l)}<small>${n}</small></button>`).join(" ");
+$("#chips").addEventListener("click",e=>{ const b=e.target.closest(".chip"); if(!b) return; state.v=b.dataset.v;
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b)); draw(); });
+$("#q").addEventListener("input",e=>{ state.q=e.target.value.trim().toLowerCase(); draw(); });
+document.addEventListener("keydown",e=>{ if(e.key==="/"&&document.activeElement!==$("#q")){ e.preventDefault(); $("#q").focus(); } });
+
+function card(p){
+  const kind = p.type==="catalog" ? `圖鑑・${p.count} 個項目` : `地圖・${p.count} 段`;
+  const v = p.verdict ? `<span class="v ${esc(TONE[p.verdict]||"gray")}">${esc(p.verdict)}</span>${p.verdictDate?`<span>${esc(p.verdictDate)}</span>`:""}` : "";
+  return `<a class="card" href="${esc(encodeURI(p.href))}">
+    <div class="top"><span class="ico">${p.iconSvg||""}</span><div><div class="name">${esc(p.title)}</div><div class="kind">${esc(kind)}</div></div></div>
+    <p class="desc">${inl(p.lede)}</p>
+    <div class="meta">${v}<span>・建置 ${esc(p.built)}</span></div></a>`;
+}
+function draw(){
+  const r = P.filter(p=>(!state.v||p.verdict===state.v)&&(!state.q||(p.title+" "+p.lede+" "+p.dir).toLowerCase().includes(state.q)));
+  const miss = state.v||state.q ? [] : D.missing;
+  $("#list").innerHTML = r.length||miss.length ? `<div class="grid">${r.map(card).join("")}${miss.map(m=>`<div class="card missing"><div class="name">${esc(m)}</div><p class="desc">有 <code>_build/</code> 但還沒有通過關卡的產出，跑一次建置腳本。</p></div>`).join("")}</div>`
+    : `<div class="empty">沒有符合的成品。</div>`;
+}
+draw();
+$("#foot").innerHTML = inl(D.footer);
+</script>
+</body>
+</html>
